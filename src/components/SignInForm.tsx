@@ -21,7 +21,7 @@ const SignInForm = () => {
                         <InputLabel htmlFor="component-outlined">Email</InputLabel>
                         <OutlinedInput type="email" {...register("Email", { required: true })} id="component-outlined" label="Email" />
                     </FormControl>
-                    <FormControl>
+                    <FormControl className='flex'>
                         <InputLabel htmlFor="component-outlined">Password</InputLabel>
                         <OutlinedInput type="password" {...register("Password", { required: true })} id="component-outlined" label="Password" />
                     </FormControl>
