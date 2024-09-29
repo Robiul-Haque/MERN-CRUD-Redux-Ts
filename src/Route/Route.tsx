@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
-import UserDashboard from "../Layout/UserDashboard";
-import SignIn from "../Page/SignIn";
-import SignUp from "../Page/SignUp";
+import SignUp from "../page/signUp";
+import SignIn from "../page/signIn";
+import UserDashboard from "../layout/userDashboard";
 
 const router = createBrowserRouter([
     {
