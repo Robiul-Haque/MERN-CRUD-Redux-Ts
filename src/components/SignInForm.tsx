@@ -3,13 +3,23 @@ import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } fr
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import SignInTodo from "../assets/sign_in_todo.svg";
+import { useLoginMutation } from '../redux/features/auth/authApi';
 
 const SignInForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false);
+    const [login, { data, error }] = useLoginMutation();
+
+    console.log("Data ", data);
+    console.log("Error ", error);
 
     const onSubmit = (data: any) => {
-        console.log(data);
+        console.log("Form data", data);
+        const userInfo = {
+            email: data.email,
+            password: data.password,
+        }
+        login(userInfo);
     };
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
@@ -21,13 +31,15 @@ const SignInForm = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-6 lg:w-[30%]">
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">Email</InputLabel>
-                        <OutlinedInput type="email" {...register("Email", { required: true })} id="component-outlined" label="Email" />
+                        <OutlinedInput type="email" {...register("email", { required: true })} id="component-outlined" label="Email" />
                     </FormControl>
                     <FormControl variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-password"
                             type={showPassword ? 'text' : 'password'}
+                            {...register("password", { required: true })}
+                            id="outlined-adornment-password"
+                            label="Password"
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
@@ -39,7 +51,6 @@ const SignInForm = () => {
                                     </IconButton>
                                 </InputAdornment>
                             }
-                            label="Password"
                         />
                     </FormControl>
                     <div className="flex justify-between gap-x-12 md:gap-x-28 lg:gap-x-0.5">
