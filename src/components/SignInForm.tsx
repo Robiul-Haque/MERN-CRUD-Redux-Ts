@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useLoginMutation } from '../redux/features/auth/authApi';
 import { useAppDispatch } from '../redux/hook';
 import { setUser } from '../redux/features/auth/authSlice';
+import { verifyToken } from '../utils/verifyToken';
 
 const SignInForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -18,7 +19,9 @@ const SignInForm = () => {
             password: data.password,
         }
         const res = await login(userInfo).unwrap();
-        dispatch(setUser({ user: {}, token: res.data.accessToken }));
+        // Verify token and return user info if valid
+        const decodedUserData = verifyToken(res.data.accessToken);
+        dispatch(setUser({ user: decodedUserData, token: res.data.accessToken }));
     };
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
