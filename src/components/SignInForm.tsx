@@ -6,12 +6,14 @@ import { useLoginMutation } from '../redux/features/auth/authApi';
 import { useAppDispatch } from '../redux/hook';
 import { setUser } from '../redux/features/auth/authSlice';
 import { verifyToken } from '../utils/verifyToken';
+import { useNavigate } from 'react-router-dom';
 
 const SignInForm = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [showPassword, setShowPassword] = useState(false);
     const [login, { error }] = useLoginMutation();
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const onSubmit = async (data: any) => {
         const userInfo = {
@@ -19,9 +21,12 @@ const SignInForm = () => {
             password: data.password,
         }
         const res = await login(userInfo).unwrap();
+
         // Verify token and return user info if valid
         const decodedUserData = verifyToken(res.data.accessToken);
         dispatch(setUser({ user: decodedUserData, token: res.data.accessToken }));
+        if (res?.success === true) navigate("/dashboard");
+
     };
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
