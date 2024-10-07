@@ -5,7 +5,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import sign_up_todo from "../assets/sign-up-todo.svg";
 
 const SignUpForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit } = useForm();
     const [showPassword, setShowPassword] = useState(false);
 
     const onSubmit = (data: any) => {
@@ -53,10 +53,7 @@ const SignUpForm = () => {
                             label="Password"
                         />
                     </FormControl>
-                    <div className="flex justify-between gap-x-12 md:gap-x-28 lg:gap-x-0.5">
-                        <small>Don,t have an account <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><a href="#">Sign Up</a></span> here</small>
-                        <small className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><a href="#">Forgot Password</a></small>
-                    </div>
+                    <small>You already have an account please <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><a href="/sign-in">Sign In</a></span> here</small>
                     <input type="submit" value={"Sign In"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />
                 </form >
             </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { MdOutlineLock, MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from '../redux/features/auth/authApi';
 import { useAppDispatch } from '../redux/hook';
@@ -62,8 +62,11 @@ const SignInForm = () => {
                 />
             </FormControl>
             <div className="flex justify-between gap-x-12 md:gap-x-28 lg:gap-x-0.5">
-                <small>Don,t have an account <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><a href="#">Sign Up</a></span> here</small>
-                <small className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><a href="#">Forgot Password</a></small>
+                <small>Don,t have an account <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><a href="/sign-up">Sign Up</a></span> here</small>
+                <a href="#" className="flex justify-center items-center gap-x-2 underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300 cursor-pointer">
+                    <MdOutlineLock />
+                    <small><p>Forgot Password</p></small>
+                </a>
             </div>
             <input type="submit" value={"Sign In"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />
         </form >
