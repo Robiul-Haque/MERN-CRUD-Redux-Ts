@@ -6,7 +6,7 @@ import { useLoginMutation } from '../redux/features/auth/authApi';
 import { useAppDispatch } from '../redux/hook';
 import { setUser } from '../redux/features/auth/authSlice';
 import { verifyToken } from '../utils/verifyToken';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
 const SignInForm = () => {
@@ -62,11 +62,11 @@ const SignInForm = () => {
                 />
             </FormControl>
             <div className="flex justify-between gap-x-12 md:gap-x-28 lg:gap-x-0.5">
-                <small>Don,t have an account <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><a href="/sign-up">Sign Up</a></span> here</small>
-                <a href="#" className="flex justify-center items-center gap-x-2 underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300 cursor-pointer">
+                <small>Don,t have an account <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><Link to="/sign-up">Sign Up</Link></span> here</small>
+                <Link to="#" className="flex justify-center items-center gap-x-2 underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300 cursor-pointer">
                     <MdOutlineLock />
                     <small><p>Forgot Password</p></small>
-                </a>
+                </Link>
             </div>
             <input type="submit" value={"Sign In"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />
         </form >

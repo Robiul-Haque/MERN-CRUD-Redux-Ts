@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import sign_up_todo from "../assets/sign-up-todo.svg";
+import { Link } from "react-router-dom";
 
 const SignUpForm = () => {
     const { register, handleSubmit } = useForm();
@@ -53,7 +54,7 @@ const SignUpForm = () => {
                             label="Password"
                         />
                     </FormControl>
-                    <small>You already have an account please <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><a href="/sign-in">Sign In</a></span> here</small>
+                    <small>You already have an account please <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><Link to="/sign-in">Sign In</Link></span> here</small>
                     <input type="submit" value={"Sign In"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />
                 </form >
             </div>
