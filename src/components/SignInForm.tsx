@@ -7,27 +7,31 @@ import { useAppDispatch } from '../redux/hook';
 import { setUser } from '../redux/features/auth/authSlice';
 import { verifyToken } from '../utils/verifyToken';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const SignInForm = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit } = useForm();
     const [showPassword, setShowPassword] = useState(false);
-    const [login, { error }] = useLoginMutation();
+    const [login] = useLoginMutation();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const onSubmit = async (data: any) => {
-        
-        const userInfo = {
-            email: data.email,
-            password: data.password,
+        const tostId = toast.loading("Logging in");
+        try {
+            const userInfo = {
+                email: data.email,
+                password: data.password,
+            }
+            const res = await login(userInfo).unwrap();
+            // Verify token and return user info if valid
+            const decodedUserData = verifyToken(res.data.accessToken);
+            dispatch(setUser({ user: decodedUserData, token: res.data.accessToken }));
+            if (res?.success) navigate("/dashboard");
+            toast.success("Logged in", { id: tostId });
+        } catch (err) {
+            toast.error("Something went wrong try again!", { id: tostId });
         }
-        const res = await login(userInfo).unwrap();
-
-        // Verify token and return user info if valid
-        const decodedUserData = verifyToken(res.data.accessToken);
-        dispatch(setUser({ user: decodedUserData, token: res.data.accessToken }));
-        if (res?.success === true) navigate("/dashboard");
-
     };
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
