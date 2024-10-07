@@ -3,12 +3,12 @@ import SignUp from "../page/signUp";
 import SignIn from "../page/signIn";
 import TodoDashboard from "../layout/todoDashboard";
 import ProtectedRoute from "../route/protectedRoute";
-import App from "../App";
+import Main from "../layout/main";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App></App>,
+        element: <Main></Main>,
         children: [
             {
                 path: "/sign-in",
