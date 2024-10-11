@@ -43,11 +43,13 @@ const todoDashboard = () => {
       }
       <section className="md:flex justify-center items-center lg:w-full bg-white h-screen">
         <div className="overflow-x-auto lg:w-11/12">
-          <div className="flex justify-between items-center mx-10 my-8">
+          <div className="flex lg:block justify-between items-center mx-10 my-8">
             <h1 className="text-center font-bold text-2xl">TODO</h1>
-            {
-              toggle ? <i onClick={() => setToggle(false)}><IoClose className="size-10" /></i> : <i onClick={() => setToggle(true)}><IoMenu className="size-10" /></i>
-            }
+            <span className="block lg:hidden">
+              {
+                toggle ? <i onClick={() => setToggle(false)}><IoClose className="size-10" /></i> : <i onClick={() => setToggle(true)}><IoMenu className="size-10" /></i>
+              }
+            </span>
           </div>
           <table className="table text-black text-center">
             {/* head */}
