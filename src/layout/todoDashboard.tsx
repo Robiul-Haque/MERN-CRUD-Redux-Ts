@@ -5,16 +5,18 @@ import { Link } from "react-router-dom";
 import { LuListTodo } from "react-icons/lu";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
+import { IoMenu } from "react-icons/io5";
+import { useState } from "react";
+import { IoClose } from "react-icons/io5";
 
 const todoDashboard = () => {
   const dispatch = useAppDispatch();
+  const [toggle, setToggle] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
     toast.success('Logged out successfully');
   }
-
-  
 
   return (
     <main className="md:flex">
@@ -29,19 +31,24 @@ const todoDashboard = () => {
         <button onClick={handleLogout} className="flex justify-center items-center gap-x-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000 w-full"><FiLogOut /> Logout</button>
       </aside>
       {/* Mobile nav */}
-      <aside className="bg-slate-100 lg:w-[18%] h-auto lg:h-screen p-6 relative block lg:hidden z-50">
-        <h2 className="text-3xl font-semibold">Sidebar</h2>
-        <hr className="my-6 border border-gray-300" />
-        <ul className="flex justify-start flex-col gap-y-6 my-8">
-          <li className="flex justify-start items-center gap-x-3 cursor-pointer bg-black hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-indigo-700 bg-clip-text text-transparent transition-all"><LuListTodo className="size-1/12 text-black" /><Link to={"#"} className="font-semibold">Dashboard</Link></li>
-          <li className="flex justify-start items-center gap-x-3 cursor-pointer bg-black hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-indigo-700 bg-clip-text text-transparent transition-all"><FaRegUserCircle className="size-1/12 text-black" /><Link to={"#"} className="font-semibold">Profile</Link></li>
-        </ul>
-        <hr className="mb-8 border border-gray-300" />
-        <button onClick={handleLogout} className="flex justify-center items-center gap-x-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000 w-full"><FiLogOut /> Logout</button>
-      </aside>
+      {
+        toggle && <aside className="bg-slate-100 w-[55%] mx-auto h-auto lg:h-screen p-6 absolute top-[2%] left-[20%] block lg:hidden z-50">
+          <ul className="flex justify-start flex-col gap-y-6 my-8">
+            <li className="flex justify-start items-center gap-x-3 cursor-pointer bg-black hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-indigo-700 bg-clip-text text-transparent transition-all"><LuListTodo className="size-1/12 text-black" /><Link to={"#"} className="font-semibold">Dashboard</Link></li>
+            <li className="flex justify-start items-center gap-x-3 cursor-pointer bg-black hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-indigo-700 bg-clip-text text-transparent transition-all"><FaRegUserCircle className="size-1/12 text-black" /><Link to={"#"} className="font-semibold">Profile</Link></li>
+          </ul>
+          <hr className="mb-8 border border-gray-300" />
+          <button onClick={handleLogout} className="flex justify-center items-center gap-x-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000 w-full"><FiLogOut /> Logout</button>
+        </aside>
+      }
       <section className="md:flex justify-center items-center lg:w-full bg-white">
         <div className="overflow-x-auto lg:w-11/12">
-          <h1 className="text-center font-bold text-2xl mb-8">TODO</h1>
+          <div className="flex justify-between items-center mx-10 my-8">
+            <h1 className="text-center font-bold text-2xl">TODO</h1>
+            {
+              toggle ? <i onClick={() => setToggle(false)}><IoClose className="size-10" /></i> : <i onClick={() => setToggle(true)}><IoMenu className="size-10" /></i>
+            }
+          </div>
           <table className="table text-black text-center">
             {/* head */}
             <thead>
