@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import SignUp from "../page/signUp";
-import SignIn from "../page/signIn";
-import TodoDashboard from "../layout/todoDashboard";
-import ProtectedRoute from "../route/protectedRoute";
+import CrudDashboard from "../layout/CrudDashboard";
 import Main from "../layout/main";
+import SignIn from "../Page/SignIn";
+import SignUp from "../Page/SignUp";
+import ProtectedRoute from "../Route/protectedRoute";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/dashboard",
-                element: <ProtectedRoute><TodoDashboard /></ProtectedRoute>
+                element: <ProtectedRoute><CrudDashboard /></ProtectedRoute>
             }
         ]
     }

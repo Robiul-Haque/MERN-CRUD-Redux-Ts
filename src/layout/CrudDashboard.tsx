@@ -9,7 +9,7 @@ import { IoMenu } from "react-icons/io5";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 
-const todoDashboard = () => {
+const CrudDashboard = () => {
   const dispatch = useAppDispatch();
   const [toggle, setToggle] = useState(false);
 
@@ -88,4 +88,4 @@ const todoDashboard = () => {
   )
 }
 
-export default todoDashboard;
+export default CrudDashboard;
