@@ -41,7 +41,7 @@ const todoDashboard = () => {
           <button onClick={handleLogout} className="flex justify-center items-center gap-x-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000 w-full"><FiLogOut /> Logout</button>
         </aside>
       }
-      <section className="md:flex justify-center items-center lg:w-full bg-white">
+      <section className="md:flex justify-center items-center lg:w-full bg-white h-screen">
         <div className="overflow-x-auto lg:w-11/12">
           <div className="flex justify-between items-center mx-10 my-8">
             <h1 className="text-center font-bold text-2xl">TODO</h1>
