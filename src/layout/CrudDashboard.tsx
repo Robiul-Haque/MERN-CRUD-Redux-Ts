@@ -68,7 +68,7 @@ const CrudDashboard = () => {
               {
                 [1, 2, 3, 4].map((index) => {
                   return (
-                    <tr className="hover:bg-slate-100 hover:cursor-pointer">
+                    <tr key={index} className="hover:bg-slate-100 hover:cursor-pointer">
                       <th>{index}</th>
                       <td>Cy Ganderton</td>
                       <td>Quality Control Specialist</td>
