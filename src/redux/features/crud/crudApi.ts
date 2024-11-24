@@ -4,7 +4,7 @@ const crudApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getAllCrud: builder.query({
             query: () => ({
-                url: "/get-all",
+                url: "/crud/get-all",
                 method: "GET",
             })
         })

@@ -8,10 +8,15 @@ import { FiLogOut } from "react-icons/fi";
 import { IoMenu } from "react-icons/io5";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { useGetAllCrudQuery } from "../redux/features/crud/crudApi";
 
 const CrudDashboard = () => {
   const dispatch = useAppDispatch();
   const [toggle, setToggle] = useState(false);
+  const { data, isLoading } = useGetAllCrudQuery({});
+
+  if (isLoading) return <div>Loading...</div>;
+  console.log(data);
 
   const handleLogout = () => {
     dispatch(logout());

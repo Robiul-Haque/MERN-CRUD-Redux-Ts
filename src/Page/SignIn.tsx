@@ -1,5 +1,5 @@
 import SignInTodo from "../assets/sign_in_todo.svg";
-import SignInForm from '../components/signInForm';
+import SignInForm from '../components/SignInForm';
 
 const SignIn = () => {
     return (

@@ -1,12 +1,12 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
+import { logout, setUser } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: "http://localhost:8000/api/v1",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
-        const token = (getState() as RootState).auth.token || localStorage.getItem('persist:auth');;
-        console.log("Form baseApi: ", token);
+        const token = (getState() as RootState).auth.token;
         if (token) headers.set("authorization", token);
         return headers;
     }
@@ -14,28 +14,33 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithRefreshToken = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
     let result = await baseQuery(args, api, extraOptions);
-    console.log(result);
-    // const res = await fetch("http://localhost:8000/api/v1/crud/get-all");
-    // const data = await res.json();
-    // console.log("get all crud", data);
-    // if (data?.error?.statusCode === 401) {
-    //     console.log(false);
-    // }
-    // if (result.error && (result.error as FetchBaseQueryError).status === 401) {
-    //     console.log('Access token expired. Trying refresh token...');
-    // }
-    return result;
-    // export default function useAxios() {
-    //     const { auth, setAuth } = useAuth();
-    //     const navigate = useNavigate();
 
-    //     useEffect(() => {
-    //       // Request interceptor
-    //       const requestIntercept = api.interceptors.request.use(
-    //         (config) => {
-    //           const accessToken = auth?.token?.accessToken;
-    //           if (accessToken) {
-}
+    if ((result as any).error?.data?.error?.statusCode === 401) {
+        // Sending refresh token
+        const res = await fetch("http://localhost:8000/api/v1/auth/refresh-token", {
+            method: "POST",
+            credentials: "include"
+        });
+        const data = await res.json();
+
+        if (data?.data?.accessToken) {
+            // Set the new access token in the user
+            const user = (api.getState() as RootState).auth.user;
+            api.dispatch(setUser({
+                user,
+                token: data?.data?.accessToken
+            }));
+
+            result = await baseQuery(args, api, extraOptions);
+        } else {
+            // Logout the user if refresh token is expired
+            api.dispatch(logout());
+        }
+    }
+
+    return result;
+};
+
 
 export const baseApi = createApi({
     reducerPath: "baseApi",
