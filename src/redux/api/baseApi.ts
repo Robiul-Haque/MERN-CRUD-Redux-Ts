@@ -6,6 +6,7 @@ const baseQuery = fetchBaseQuery({
     baseUrl: "http://localhost:8000/api/v1",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
+        // Get the token from state and send it header authorization in every request
         const token = (getState() as RootState).auth.token;
         if (token) headers.set("authorization", token);
         return headers;
@@ -24,7 +25,7 @@ const baseQueryWithRefreshToken = async (args: string | FetchArgs, api: BaseQuer
         const data = await res.json();
 
         if (data?.data?.accessToken) {
-            // Set the new access token in the user
+            // Set the new access token in the user state
             const user = (api.getState() as RootState).auth.user;
             api.dispatch(setUser({
                 user,
