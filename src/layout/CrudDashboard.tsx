@@ -26,6 +26,19 @@ const CrudDashboard = () => {
   const [toggle, setToggle] = useState(false);
   const { data, isLoading } = useGetAllCrudQuery({});
 
+  type TTodoTable = {
+    createdAt: string;
+    description: string;
+    email: string;
+    image: string
+    name: string
+    phone: number;
+    priority: string;
+    updatedAt: string;
+    __v: number;
+    _id: string;
+  }
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -40,14 +53,14 @@ const CrudDashboard = () => {
     )
   }
 
-  console.log(data);
+  console.log(data.data);
 
   const handleLogout = () => {
     dispatch(logout());
     toast.success('Logged out successfully');
   }
 
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  const StyledTableCell = styled(TableCell)<{ component?: string }>(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
       color: theme.palette.common.white,
@@ -56,6 +69,7 @@ const CrudDashboard = () => {
       fontSize: 14,
     },
   }));
+
 
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
@@ -118,34 +132,34 @@ const CrudDashboard = () => {
               <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                   <TableRow>
-                    <StyledTableCell>Image</StyledTableCell>
-                    <StyledTableCell align="right">Name</StyledTableCell>
-                    <StyledTableCell align="right">Email</StyledTableCell>
-                    <StyledTableCell align="right">Phone</StyledTableCell>
-                    <StyledTableCell align="right">Time</StyledTableCell>
-                    <StyledTableCell align="right">Description</StyledTableCell>
-                    <StyledTableCell align="right">Priority</StyledTableCell>
-                    <StyledTableCell align="right">Action</StyledTableCell>
+                    <StyledTableCell align="center">Image</StyledTableCell>
+                    <StyledTableCell align="center">Name</StyledTableCell>
+                    <StyledTableCell align="center">Email</StyledTableCell>
+                    <StyledTableCell align="center">Phone</StyledTableCell>
+                    <StyledTableCell align="center">Description</StyledTableCell>
+                    <StyledTableCell align="center">Priority</StyledTableCell>
+                    <StyledTableCell align="center">Time</StyledTableCell>
+                    <StyledTableCell align="center">Action</StyledTableCell>
                   </TableRow>
                 </TableHead>
 
                 <TableBody>
-                  {rows.map((row) => (
-                    <StyledTableRow key={row.name}>
-                      <StyledTableCell component="th" scope="row">
-                        {row.name}
+                  {data?.data?.map((row: TTodoTable) => (
+                    <StyledTableRow key={row._id}>
+                      <StyledTableCell component="th" scope="row" align="center">
+                        {row.image}
                       </StyledTableCell>
-                      <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                      <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                      <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                      <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                      <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                      <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                      <StyledTableCell align="right">
-                        <IconButton color="primary" size="small">
+                      <StyledTableCell align="center">{row.name}</StyledTableCell>
+                      <StyledTableCell align="center">{row.email}</StyledTableCell>
+                      <StyledTableCell align="center">0{row.phone}</StyledTableCell>
+                      <StyledTableCell align="center">{row.description}</StyledTableCell>
+                      <StyledTableCell align="center">{row.priority}</StyledTableCell>
+                      <StyledTableCell align="center">{row.createdAt}</StyledTableCell>
+                      <StyledTableCell align="center">
+                        <IconButton color="primary" size="medium">
                           <BiEdit />
                         </IconButton>
-                        <IconButton color="secondary" size="small">
+                        <IconButton color="secondary" size="medium">
                           <DeleteForeverIcon />
                         </IconButton>
                       </StyledTableCell>
