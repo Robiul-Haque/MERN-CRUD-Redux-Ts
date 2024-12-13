@@ -17,14 +17,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { IconButton } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, Grid2, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { BiEdit } from "react-icons/bi";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { Controller, useForm } from 'react-hook-form';
+import { Grid4x4, GridOn } from "@mui/icons-material";
 
 const CrudDashboard = () => {
   const dispatch = useAppDispatch();
   const [toggle, setToggle] = useState(false);
   const { data, isLoading } = useGetAllCrudQuery({});
+  const [open, setOpen] = useState(false);
+  const { register, handleSubmit, control, formState: { errors } } = useForm();
 
   type TTodoTable = {
     createdAt: string;
@@ -81,18 +85,16 @@ const CrudDashboard = () => {
     },
   }));
 
-  function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
-    return { name, calories, fat, carbs, protein };
-  }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
+  const onSubmit = (data: any) => console.log(data);
+  console.log(errors);
 
   return (
     <main className="md:flex">
@@ -157,7 +159,9 @@ const CrudDashboard = () => {
                       <StyledTableCell align="center">{row.createdAt}</StyledTableCell>
                       <StyledTableCell align="center">
                         <IconButton color="primary" size="medium">
-                          <BiEdit />
+                          <Button variant="contained" onClick={handleClickOpen}>
+                            <BiEdit />
+                          </Button>
                         </IconButton>
                         <IconButton color="secondary" size="medium">
                           <DeleteForeverIcon />
@@ -168,6 +172,81 @@ const CrudDashboard = () => {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"Use Google's location service?"}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  <form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 600, margin: "0 auto" }}>
+                    <Grid container spacing={2}>
+                      {/* Name Field */}
+                      <Grid item xs={12}>
+                        <TextField fullWidth label="Name" {...register("name", { required: "Name is required", maxLength: 40 })} error={!!errors.name} helperText={errors?.name?.message?.toString()} />
+                      </Grid>
+                      {/* Email Field */}
+                      <Grid item xs={12}>
+                        <TextField fullWidth label="Email" type="email" {...register("email", { pattern: { value: /^\S+@\S+$/i, message: "Invalid email format", } })} error={!!errors.email} helperText={errors?.name?.message?.toString()} />
+                      </Grid>
+                      {/* Phone Field */}
+                      <Grid item xs={12}>
+                        <TextField fullWidth label="Phone" type="tel" {...register("phone")}
+                        />
+                      </Grid>
+                      {/* Description Field */}
+                      <Grid item xs={12}>
+                        <TextField fullWidth label="Description" multiline rows={4} {...register("description", { maxLength: { value: 225, message: "Description cannot exceed 225 characters", } })} error={!!errors.description} helperText={errors?.name?.message?.toString()} />
+                      </Grid>
+                      {/* Priority Field */}
+                      <Grid item xs={12}>
+                        <FormControl fullWidth>
+                          <InputLabel>Priority</InputLabel>
+                          <Controller name="priority" control={control} defaultValue="" rules={{ required: "Priority is required" }} render={({ field }) => (
+                            <Select {...field} error={!!errors.priority}>
+                              <MenuItem value="High">High</MenuItem>
+                              <MenuItem value="Medium">Medium</MenuItem>
+                              <MenuItem value="Low">Low</MenuItem>
+                            </Select>
+                          )}
+                          />
+                          {errors.priority && (
+                            <Typography color="error" variant="caption">
+                              {errors?.priority?.message?.toString()}
+                            </Typography>
+                          )}
+                        </FormControl>
+                      </Grid>
+                      {/* Image Upload Field */}
+                      <Grid item xs={12}>
+                        <input type="file" accept="image/jpeg, image/png" {...register("image", { required: "Image is required", validate: { fileSize: (files) => files && files[0]?.size <= 2 * 1024 * 1024 || "File size must be less than 2MB", fileType: (files) => files && ["image/jpeg", "image/png"].includes(files[0]?.type) || "Only JPG, JPEG, and PNG files are allowed" } })} />
+                        {errors.image && (
+                          <Typography color="error" variant="caption">
+                            {errors?.image?.message?.toString()}
+                          </Typography>
+                        )}
+                      </Grid>
+                      {/* Submit Button */}
+                      <Grid item xs={12}>
+                        <Button variant="contained" color="primary" type="submit" fullWidth>
+                          Submit
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </form>
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Close</Button>
+                <Button onClick={handleClose} autoFocus>
+                  Update
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
       </section>
