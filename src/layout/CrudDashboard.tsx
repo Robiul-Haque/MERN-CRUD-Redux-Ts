@@ -43,7 +43,7 @@ const CrudDashboard = () => {
         </aside>
       }
       <section className="md:flex justify-center items-center lg:w-full bg-white h-screen">
-        <div className="overflow-x-auto lg:w-11/12">
+        <div className="overflow-x-auto lg:w-full lg:mx-5">
           <div className="flex lg:block justify-between items-center mx-10 my-8">
             <h1 className="text-center font-bold text-2xl">TODO</h1>
             <span className="block lg:hidden">

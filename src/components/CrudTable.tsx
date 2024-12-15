@@ -8,10 +8,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, Grid2, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { BiEdit } from "react-icons/bi";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Controller, useForm } from 'react-hook-form';
+import moment from "moment";
 
 const CrudTable = () => {
   const { data: getAllCrud, isLoading: isAllCrudLoading } = useGetAllCrudQuery({});
@@ -127,7 +128,7 @@ const CrudTable = () => {
                     <StyledTableCell align="center">0{item?.phone}</StyledTableCell>
                     <StyledTableCell align="center">{item?.description}</StyledTableCell>
                     <StyledTableCell align="center">{item?.priority}</StyledTableCell>
-                    <StyledTableCell align="center">{item?.createdAt}</StyledTableCell>
+                    <StyledTableCell align="center">{moment(item?.createdAt).format("hh:mm A")}</StyledTableCell>
                     <StyledTableCell align="center">
                       <IconButton color="primary" size="medium">
                         <Button variant="contained" onClick={() => { setId(item?._id), handleClickOpen() }}>
