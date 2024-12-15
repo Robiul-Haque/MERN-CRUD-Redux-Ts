@@ -9,6 +9,7 @@ const baseQuery = fetchBaseQuery({
         // Get the token from state and send it header authorization in every request
         const token = (getState() as RootState).auth.token;
         if (token) headers.set("authorization", token);
+        
         return headers;
     }
 });
@@ -42,9 +43,9 @@ const baseQueryWithRefreshToken = async (args: string | FetchArgs, api: BaseQuer
     return result;
 };
 
-
 export const baseApi = createApi({
     reducerPath: "baseApi",
     baseQuery: baseQueryWithRefreshToken,
+    tagTypes: ["todo"],
     endpoints: () => ({}),
 });
