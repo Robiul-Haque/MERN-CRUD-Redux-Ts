@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetAllCrudQuery, useUpdateSingleCrudMutation } from "../redux/features/crud/crudApi";
+import { useDeleteSingleCrudMutation, useGetAllCrudQuery, useUpdateSingleCrudMutation } from "../redux/features/crud/crudApi";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,6 +20,8 @@ const CrudTable = () => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, control, formState: { errors, isValid } } = useForm();
   const [updateSingleCrud, { isLoading: isUpdateAllCrudLoading }] = useUpdateSingleCrudMutation();
+  const [deleteSingleCrudById, { data, isLoading, isSuccess, isError }] = useDeleteSingleCrudMutation();
+  console.log({ data, isLoading, isSuccess, isError });
 
   type TTodo = {
     createdAt: string;
@@ -46,6 +48,10 @@ const CrudTable = () => {
         </div>
       </div>
     )
+  }
+
+  if (data?.data?.message) {
+    
   }
 
   const StyledTableCell = styled(TableCell)<{ component?: string }>(({ theme }) => ({
@@ -94,6 +100,8 @@ const CrudTable = () => {
     updateSingleCrud({ id, data: formData });
   }
 
+  const deleteSingleCrud = (id: string) => deleteSingleCrudById(id);
+
   return (
     <div>
       <TableContainer component={Paper}>
@@ -135,7 +143,7 @@ const CrudTable = () => {
                           <BiEdit />
                         </Button>
                       </IconButton>
-                      <IconButton color="secondary" size="medium">
+                      <IconButton color="secondary" size="medium" onClick={() => deleteSingleCrud(item?._id)}>
                         <DeleteForeverIcon />
                       </IconButton>
                     </StyledTableCell>

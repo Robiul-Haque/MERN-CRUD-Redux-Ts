@@ -17,7 +17,14 @@ const crudApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["todo"]
         }),
+        deleteSingleCrud: builder.mutation({
+            query: (id) => ({
+                url: `/crud/delete/${id}`,
+                method: "DELETE"
+            }),
+            invalidatesTags: ["todo"]
+        })
     })
 });
 
-export const { useGetAllCrudQuery, useUpdateSingleCrudMutation } = crudApi;
+export const { useGetAllCrudQuery, useUpdateSingleCrudMutation, useDeleteSingleCrudMutation } = crudApi;
