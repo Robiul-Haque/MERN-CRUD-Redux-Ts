@@ -20,8 +20,7 @@ const CrudTable = () => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, control, formState: { errors, isValid } } = useForm();
   const [updateSingleCrud, { isLoading: isUpdateAllCrudLoading }] = useUpdateSingleCrudMutation();
-  const [deleteSingleCrudById, { data, isLoading, isSuccess, isError }] = useDeleteSingleCrudMutation();
-  console.log({ data, isLoading, isSuccess, isError });
+  const [deleteSingleCrudById, { data }] = useDeleteSingleCrudMutation();
 
   type TTodo = {
     createdAt: string;
