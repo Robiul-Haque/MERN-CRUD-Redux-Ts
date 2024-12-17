@@ -2,6 +2,14 @@ import { baseApi } from "../../api/baseApi";
 
 const crudApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+        AddCrud: builder.mutation({
+            query: (data) => ({
+                url: "/crud/create",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["todo"]
+        }),
         getAllCrud: builder.query({
             query: () => ({
                 url: "/crud/get-all",
@@ -20,11 +28,11 @@ const crudApi = baseApi.injectEndpoints({
         deleteSingleCrud: builder.mutation({
             query: (id) => ({
                 url: `/crud/delete/${id}`,
-                method: "DELETE"
+                method: "DELETE",
             }),
             invalidatesTags: ["todo"]
         })
     })
 });
 
-export const { useGetAllCrudQuery, useUpdateSingleCrudMutation, useDeleteSingleCrudMutation } = crudApi;
+export const { useAddCrudMutation, useGetAllCrudQuery, useUpdateSingleCrudMutation, useDeleteSingleCrudMutation } = crudApi;

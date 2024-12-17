@@ -3,10 +3,15 @@ import AddIcon from '@mui/icons-material/Add';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { Controller, useForm } from 'react-hook-form';
 import CloseIcon from '@mui/icons-material/Close';
+import { useAddCrudMutation } from "../redux/features/crud/crudApi";
+import { toast } from "sonner";
 
 const AddCrud = () => {
     const [open, setOpen] = useState(false);
     const { register, handleSubmit, control, formState: { errors, isValid } } = useForm();
+    const [AddCrud, { data: responseData }] = useAddCrudMutation();
+
+    if (responseData?.success) toast.success(responseData?.message);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -29,8 +34,9 @@ const AddCrud = () => {
 
         formData.append("data", JSON.stringify(inputData));
         formData.append("image", data.image[0]);
-    }
 
+        AddCrud(formData);
+    }
 
     return (
         <>
@@ -46,7 +52,7 @@ const AddCrud = () => {
                 <DialogTitle className="flex justify-between items-center" id="alert-dialog-title">
                     {"Create crud data..."}
                     <DialogActions>
-                        <Button onClick={handleClose} variant="contained" startIcon={<CloseIcon />} size="small">Close</Button>
+                        <Button onClick={handleClose} variant="contained" size="small" aria-label="close"><CloseIcon /> Close</Button>
                     </DialogActions>
                 </DialogTitle>
                 <DialogContent>
