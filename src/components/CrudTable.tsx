@@ -13,6 +13,8 @@ import { BiEdit } from "react-icons/bi";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Controller, useForm } from 'react-hook-form';
 import moment from "moment";
+import CloseIcon from '@mui/icons-material/Close';
+import { toast } from "sonner";
 
 const CrudTable = () => {
   const { data: getAllCrud, isLoading: isAllCrudLoading } = useGetAllCrudQuery({});
@@ -49,9 +51,7 @@ const CrudTable = () => {
     )
   }
 
-  if (data?.data?.message) {
-    
-  }
+  if (data?.data?.succes) toast.success(data?.data?.message);
 
   const StyledTableCell = styled(TableCell)<{ component?: string }>(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -74,13 +74,9 @@ const CrudTable = () => {
     },
   }));
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const handleClickOpen = () => setOpen(true);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => setOpen(false);
 
   const onSubmit = (data: any) => {
     const formData = new FormData();
@@ -160,8 +156,11 @@ const CrudTable = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Update crud data..."}
+        <DialogTitle className="flex justify-between items-center" id="alert-dialog-title">
+          {"Update crud..."}
+          <DialogActions>
+            <Button onClick={handleClose} variant="contained" size="small" aria-label="close"><CloseIcon /> Close</Button>
+          </DialogActions>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -222,9 +221,6 @@ const CrudTable = () => {
             </form>
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
-        </DialogActions>
       </Dialog>
     </div>
   )

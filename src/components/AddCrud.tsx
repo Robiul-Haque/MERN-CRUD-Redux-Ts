@@ -50,7 +50,7 @@ const AddCrud = () => {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle className="flex justify-between items-center" id="alert-dialog-title">
-                    {"Create crud data..."}
+                    {"Create crud..."}
                     <DialogActions>
                         <Button onClick={handleClose} variant="contained" size="small" aria-label="close"><CloseIcon /> Close</Button>
                     </DialogActions>
