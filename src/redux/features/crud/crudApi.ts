@@ -17,6 +17,14 @@ const crudApi = baseApi.injectEndpoints({
             }),
             providesTags: ["todo"]
         }),
+        getSingleCrud: builder.query({
+            query: (id) => ({
+                url: `/crud/get-single-crud/${id}`,
+                method: "GET",
+                // params: id,
+            }),
+            providesTags: ["todo"]
+        }),
         updateSingleCrud: builder.mutation({
             query: (args: { id: string, data: object }) => ({
                 url: `/crud/update/${args?.id}`,
@@ -35,4 +43,4 @@ const crudApi = baseApi.injectEndpoints({
     })
 });
 
-export const { useAddCrudMutation, useGetAllCrudQuery, useUpdateSingleCrudMutation, useDeleteSingleCrudMutation } = crudApi;
+export const { useAddCrudMutation, useGetAllCrudQuery, useGetSingleCrudQuery, useUpdateSingleCrudMutation, useDeleteSingleCrudMutation } = crudApi;

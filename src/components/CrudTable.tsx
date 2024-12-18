@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDeleteSingleCrudMutation, useGetAllCrudQuery, useUpdateSingleCrudMutation } from "../redux/features/crud/crudApi";
+import { useDeleteSingleCrudMutation, useGetAllCrudQuery, useGetSingleCrudQuery, useUpdateSingleCrudMutation } from "../redux/features/crud/crudApi";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,7 +23,12 @@ const CrudTable = () => {
   const { register, handleSubmit, control, formState: { errors, isValid } } = useForm();
   const [updateSingleCrud, { isLoading: isUpdateAllCrudLoading }] = useUpdateSingleCrudMutation();
   const [deleteSingleCrudById, { data }] = useDeleteSingleCrudMutation();
-
+  const { data: responseData } = useGetSingleCrudQuery(id);
+  console.log(responseData);
+  const { name, email, phone, image, description, priority } = responseData?.data || {};
+  console.log(name);
+  // console.log(responseData?.data?.name);
+  
   type TTodo = {
     createdAt: string;
     description: string;
@@ -168,7 +173,7 @@ const CrudTable = () => {
               <Grid container spacing={2}>
                 {/* Name Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Name" {...register("name", { required: "Name is required", maxLength: 40 })} error={!!errors.name} helperText={errors?.name?.message?.toString()} />
+                  <TextField fullWidth label="Name" {...register("name", { required: "Name is required", maxLength: 40 })} value={name} error={!!errors.name} helperText={errors?.name?.message?.toString()} />
                 </Grid>
                 {/* Email Field */}
                 <Grid item xs={12}>
