@@ -25,10 +25,8 @@ const CrudTable = () => {
   const [deleteSingleCrudById, { data }] = useDeleteSingleCrudMutation();
   const { data: responseData } = useGetSingleCrudQuery(id);
   console.log(responseData);
-  const { name, email, phone, image, description, priority } = responseData?.data || {};
-  console.log(name);
-  // console.log(responseData?.data?.name);
-  
+  const { name, email, phone, description, priority } = responseData?.data || {};
+
   type TTodo = {
     createdAt: string;
     description: string;
@@ -99,7 +97,6 @@ const CrudTable = () => {
 
     updateSingleCrud({ id, data: formData });
   }
-
   const deleteSingleCrud = (id: string) => deleteSingleCrudById(id);
 
   return (
@@ -173,23 +170,22 @@ const CrudTable = () => {
               <Grid container spacing={2}>
                 {/* Name Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Name" {...register("name", { required: "Name is required", maxLength: 40 })} value={name} error={!!errors.name} helperText={errors?.name?.message?.toString()} />
+                  <TextField fullWidth label="Name" {...register("name", { required: "Name is required", maxLength: 40 })} value={name || ""} error={!!errors.name} helperText={errors?.name?.message?.toString()} />
                 </Grid>
                 {/* Email Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Email" type="email" {...register("email", { pattern: { value: /^\S+@\S+$/i, message: "Invalid email format", } })} error={!!errors.email} />
+                  <TextField fullWidth label="Email" type="email" {...register("email", { pattern: { value: /^\S+@\S+$/i, message: "Invalid email format", } })} value={email || ""} error={!!errors.email} />
                 </Grid>
                 {/* Phone Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Phone" type="tel" {...register("phone")}
-                  />
+                  <TextField fullWidth label="Phone" type="tel" {...register("phone")} value={phone || ""} />
                 </Grid>
                 {/* Priority Field */}
                 <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel>Priority</InputLabel>
-                    <Controller name="priority" control={control} defaultValue="" rules={{ required: "Priority is required" }} render={({ field }) => (
-                      <Select {...field} error={!!errors.priority}>
+                    <Controller name="priority" control={control} rules={{ required: "Priority is required" }} render={({ field }) => (
+                      <Select {...field} value={priority || ""} error={!!errors.priority}>
                         <MenuItem value="High">High</MenuItem>
                         <MenuItem value="Medium">Medium</MenuItem>
                         <MenuItem value="Low">Low</MenuItem>
@@ -205,7 +201,7 @@ const CrudTable = () => {
                 </Grid>
                 {/* Description Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Description" multiline rows={2} {...register("description", { maxLength: { value: 225, message: "Description cannot exceed 225 characters", } })} error={!!errors.description} />
+                  <TextField fullWidth label="Description" multiline rows={2} {...register("description", { maxLength: { value: 225, message: "Description cannot exceed 225 characters", } })} value={description || ""} error={!!errors.description} />
                 </Grid>
                 {/* Image Upload Field */}
                 <Grid item xs={12}>
