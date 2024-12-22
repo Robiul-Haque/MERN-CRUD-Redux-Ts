@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDeleteSingleCrudMutation, useGetAllCrudQuery, useGetSingleCrudQuery, useUpdateSingleCrudMutation } from "../redux/features/crud/crudApi";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -20,12 +20,22 @@ const CrudTable = () => {
   const { data: getAllCrud, isLoading: isAllCrudLoading } = useGetAllCrudQuery({});
   const [id, setId] = useState("");
   const [open, setOpen] = useState(false);
-  const { register, handleSubmit, control, formState: { errors, isValid } } = useForm();
+  const { register, handleSubmit, control, reset, formState: { errors, isValid } } = useForm();
   const [updateSingleCrud, { isLoading: isUpdateAllCrudLoading }] = useUpdateSingleCrudMutation();
   const [deleteSingleCrudById, { data }] = useDeleteSingleCrudMutation();
   const { data: responseData } = useGetSingleCrudQuery(id);
-  console.log(responseData);
-  const { name, email, phone, description, priority } = responseData?.data || {};
+
+  useEffect(() => {
+    if (responseData?.data) {
+      reset({
+        name: responseData?.data?.name || "",
+        email: responseData?.data?.email || "",
+        phone: responseData?.data?.phone || "",
+        priority: responseData?.data?.priority || "",
+        description: responseData?.data?.description || "",
+      });
+    }
+  }, [responseData, reset]);
 
   type TTodo = {
     createdAt: string;
@@ -97,6 +107,7 @@ const CrudTable = () => {
 
     updateSingleCrud({ id, data: formData });
   }
+
   const deleteSingleCrud = (id: string) => deleteSingleCrudById(id);
 
   return (
@@ -170,22 +181,22 @@ const CrudTable = () => {
               <Grid container spacing={2}>
                 {/* Name Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Name" {...register("name", { required: "Name is required", maxLength: 40 })} value={name || ""} error={!!errors.name} helperText={errors?.name?.message?.toString()} />
+                  <TextField fullWidth label="Name" {...register("name", { required: "Name is required", maxLength: 40 })} error={!!errors.name} helperText={errors?.name?.message?.toString()} />
                 </Grid>
                 {/* Email Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Email" type="email" {...register("email", { pattern: { value: /^\S+@\S+$/i, message: "Invalid email format", } })} value={email || ""} error={!!errors.email} />
+                  <TextField fullWidth label="Email" type="email" {...register("email", { pattern: { value: /^\S+@\S+$/i, message: "Invalid email format", } })} error={!!errors.email} />
                 </Grid>
                 {/* Phone Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Phone" type="tel" {...register("phone")} value={phone || ""} />
+                  <TextField fullWidth label="Phone" type="tel" {...register("phone")} />
                 </Grid>
                 {/* Priority Field */}
                 <Grid item xs={12}>
                   <FormControl fullWidth>
                     <InputLabel>Priority</InputLabel>
                     <Controller name="priority" control={control} rules={{ required: "Priority is required" }} render={({ field }) => (
-                      <Select {...field} value={priority || ""} error={!!errors.priority}>
+                      <Select {...field} error={!!errors.priority}>
                         <MenuItem value="High">High</MenuItem>
                         <MenuItem value="Medium">Medium</MenuItem>
                         <MenuItem value="Low">Low</MenuItem>
@@ -201,7 +212,7 @@ const CrudTable = () => {
                 </Grid>
                 {/* Description Field */}
                 <Grid item xs={12}>
-                  <TextField fullWidth label="Description" multiline rows={2} {...register("description", { maxLength: { value: 225, message: "Description cannot exceed 225 characters", } })} value={description || ""} error={!!errors.description} />
+                  <TextField fullWidth label="Description" multiline rows={2} {...register("description", { maxLength: { value: 225, message: "Description cannot exceed 225 characters", } })} error={!!errors.description} />
                 </Grid>
                 {/* Image Upload Field */}
                 <Grid item xs={12}>
