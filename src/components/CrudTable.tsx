@@ -141,7 +141,7 @@ const CrudTable = () => {
                     </StyledTableCell>
                     <StyledTableCell align="center">{item?.name}</StyledTableCell>
                     <StyledTableCell align="center">{item?.email}</StyledTableCell>
-                    <StyledTableCell align="center">0{item?.phone}</StyledTableCell>
+                    <StyledTableCell align="center">{item?.phone}</StyledTableCell>
                     <StyledTableCell align="center">{item?.description}</StyledTableCell>
                     <StyledTableCell align="center">{item?.priority}</StyledTableCell>
                     <StyledTableCell align="center">{moment(item?.createdAt).format("hh:mm A")}</StyledTableCell>

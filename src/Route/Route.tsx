@@ -4,6 +4,8 @@ import Main from "../layout/main";
 import SignIn from "../Page/SignIn";
 import SignUp from "../Page/SignUp";
 import ProtectedRoute from "../Route/protectedRoute";
+import Profile from "../Page/Profile";
+import Crud from "../Page/Crud";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +22,17 @@ const router = createBrowserRouter([
             },
             {
                 path: "/dashboard",
-                element: <ProtectedRoute><CrudDashboard /></ProtectedRoute>
+                element: <ProtectedRoute><CrudDashboard /></ProtectedRoute>,
+                children: [
+                    {
+                        path: "/dashboard",
+                        element: <Crud />
+                    },
+                    {
+                        path: "/dashboard/profile",
+                        element: <Profile />
+                    }
+                ]
             }
         ]
     }
