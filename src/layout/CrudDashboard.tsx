@@ -6,6 +6,7 @@ import { LuListTodo } from "react-icons/lu";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { RootState } from "../redux/store";
+import { setToggle } from "../redux/features/crud/crudSlice";
 
 const CrudDashboard = () => {
   const dispatch = useAppDispatch();
@@ -32,8 +33,8 @@ const CrudDashboard = () => {
       {
         toggle && <aside className="bg-slate-100 w-[55%] mx-auto h-auto lg:h-screen p-6 absolute top-[2%] left-[20%] block lg:hidden z-50">
           <ul className="flex justify-start flex-col gap-y-6 my-8">
-            <li className="flex justify-start items-center gap-x-3 cursor-pointer bg-black hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-indigo-700 bg-clip-text text-transparent transition-all"><LuListTodo className="size-1/12 text-black" /><Link to="/dashboard" className="font-semibold">Dashboard</Link></li>
-            <li className="flex justify-start items-center gap-x-3 cursor-pointer bg-black hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-indigo-700 bg-clip-text text-transparent transition-all"><FaRegUserCircle className="size-1/12 text-black" /><Link to="/dashboard/profile" className="font-semibold">Profile</Link></li>
+            <li className="flex justify-start items-center gap-x-3 cursor-pointer bg-black hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-indigo-700 bg-clip-text text-transparent transition-all"><LuListTodo className="size-1/12 text-black" /><Link to="/dashboard" onClick={() => dispatch(setToggle(false))} className="font-semibold">Dashboard</Link></li>
+            <li className="flex justify-start items-center gap-x-3 cursor-pointer bg-black hover:bg-gradient-to-r hover:from-fuchsia-700 hover:to-indigo-700 bg-clip-text text-transparent transition-all"><FaRegUserCircle className="size-1/12 text-black" /><Link to="/dashboard/profile" onClick={() => dispatch(setToggle(false))} className="font-semibold">Profile</Link></li>
           </ul>
           <hr className="mb-8 border border-gray-300" />
           <button onClick={handleLogout} className="flex justify-center items-center gap-x-2 bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000 w-full"><FiLogOut /> Logout</button>
