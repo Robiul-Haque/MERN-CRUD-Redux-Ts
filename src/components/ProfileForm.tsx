@@ -1,8 +1,14 @@
 import { Avatar, Button, Grid, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useGetProfileQuery } from "../redux/features/profile/profileApi";
+import { useAppSelector } from "../redux/hook";
+import { RootState } from "../redux/store";
 
 const ProfileForm = () => {
     const { register, handleSubmit, control, formState: { errors, isValid } } = useForm();
+    const { email }: any = useAppSelector((state: RootState) => state.auth.user);
+    const { data } = useGetProfileQuery(email);
+    console.log(data);
 
     const onSubmit = (data: any) => {
         const formData = new FormData();
@@ -21,7 +27,7 @@ const ProfileForm = () => {
 
     return (
         <div>
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{ width: 100, height: 100 }} className="mx-auto mb-10"/>
+            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{ width: 100, height: 100 }} className="mx-auto mb-10" />
             <form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 600, margin: "5px auto" }}>
                 <Grid container spacing={2}>
                     {/* Name Field */}
@@ -34,8 +40,7 @@ const ProfileForm = () => {
                     </Grid>
                     {/* Phone Field */}
                     <Grid item xs={12}>
-                        <TextField fullWidth label="Phone" type="tel" {...register("phone")}
-                        />
+                        <TextField fullWidth label="Phone" type="tel" {...register("phone")} />
                     </Grid>
                     {/* Image Upload Field */}
                     <Grid item xs={12}>
