@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDeleteSingleCrudMutation, useGetAllCrudQuery, useGetSingleCrudQuery, useUpdateSingleCrudMutation } from "../redux/features/crud/crudApi";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,7 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { BiEdit } from "react-icons/bi";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Controller, useForm } from 'react-hook-form';
@@ -87,10 +87,6 @@ const CrudTable = () => {
     },
   }));
 
-  const handleClickOpen = () => setOpen(true);
-
-  const handleClose = () => setOpen(false);
-
   const onSubmit = (data: any) => {
     const formData = new FormData();
 
@@ -108,10 +104,8 @@ const CrudTable = () => {
     updateSingleCrud({ id, data: formData });
   }
 
-  const deleteSingleCrud = (id: string) => deleteSingleCrudById(id);
-
   return (
-    <div>
+    <>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
@@ -147,11 +141,11 @@ const CrudTable = () => {
                     <StyledTableCell align="center">{moment(item?.createdAt).format("hh:mm A")}</StyledTableCell>
                     <StyledTableCell align="center">
                       <IconButton color="primary" size="medium">
-                        <Button variant="contained" onClick={() => { setId(item?._id), handleClickOpen() }}>
+                        <Button variant="contained" onClick={() => { setId(item?._id), setOpen(true) }}>
                           <BiEdit />
                         </Button>
                       </IconButton>
-                      <IconButton color="secondary" size="medium" onClick={() => deleteSingleCrud(item?._id)}>
+                      <IconButton color="secondary" size="medium" onClick={() => deleteSingleCrudById(item?._id)}>
                         <DeleteForeverIcon />
                       </IconButton>
                     </StyledTableCell>
@@ -165,14 +159,14 @@ const CrudTable = () => {
       {/* Modal */}
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle className="flex justify-between items-center" id="alert-dialog-title">
           {"Update crud..."}
           <DialogActions>
-            <Button onClick={handleClose} variant="contained" size="small" aria-label="close"><CloseIcon /> Close</Button>
+            <Button onClick={() => setOpen(false)} variant="contained" size="small" aria-label="close"><CloseIcon /> Close</Button>
           </DialogActions>
         </DialogTitle>
         <DialogContent>
@@ -225,7 +219,7 @@ const CrudTable = () => {
                 </Grid>
                 {/* Submit Button */}
                 <Grid item xs={12}>
-                  <Button variant="contained" color="primary" type="submit" fullWidth disabled={!isValid} onClick={handleClose}>
+                  <Button variant="contained" color="primary" type="submit" fullWidth disabled={!isValid} onClick={() => setOpen(false)}>
                     Submit
                   </Button>
                 </Grid>
@@ -233,8 +227,8 @@ const CrudTable = () => {
             </form>
           </DialogContentText>
         </DialogContent>
-      </Dialog>
-    </div>
+      </Dialog >
+    </>
   )
 }
 

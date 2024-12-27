@@ -3,15 +3,19 @@ import { baseApi } from "../../api/baseApi";
 const profileApi = baseApi.injectEndpoints({
     endpoints: (bulder) => ({
         getProfile: bulder.query({
-            query: (email) => {
-                console.log("From profile get api: ",email);
-                return {
-                    url: `/user/get-single-user/${email}`,
-                    method: "GET",
-                }
-            }
-        })
+            query: (email) => ({
+                url: `/user/get-single-user/${email}`,
+                method: "GET",
+            })
+        }),
+        updateUser: bulder.mutation({
+            query: (payload) => ({
+                url: `/user/user-data-update/${payload?.email}`,
+                method: "PUT",
+                body: payload?.data,
+            })
+        }),
     })
 });
 
-export const { useGetProfileQuery } = profileApi;
+export const { useGetProfileQuery, useUpdateUserMutation } = profileApi;
