@@ -6,14 +6,16 @@ const profileApi = baseApi.injectEndpoints({
             query: (email) => ({
                 url: `/user/get-single-user/${email}`,
                 method: "GET",
-            })
+            }),
+            providesTags: ["user"]
         }),
         updateUser: bulder.mutation({
             query: (payload) => ({
                 url: `/user/user-data-update/${payload?.email}`,
                 method: "PUT",
                 body: payload?.data,
-            })
+            }),
+            invalidatesTags: ["user"]
         }),
     })
 });

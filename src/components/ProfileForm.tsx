@@ -36,7 +36,7 @@ const ProfileForm = () => {
         )
     }
 
-    if (data?.data?.succes) toast.success(data?.data?.message);
+    if (updateData?.success) toast.success(updateData?.message);
 
     const onSubmit = (data: any) => {
         const formData = new FormData();
