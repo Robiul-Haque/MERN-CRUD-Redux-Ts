@@ -54,7 +54,7 @@ const ProfileForm = () => {
 
     return (
         <>
-            <Avatar alt={data?.data?.name} src={data?.data?.image} sx={{ width: 100, height: 100 }} className="mx-auto mb-10 border-2 border-purple-500" />
+            <Avatar alt={data?.data?.name} src={data?.data?.image?.url} sx={{ width: 100, height: 100 }} className="mx-auto mb-10 border-2 border-purple-500" />
             <form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: 600, margin: "5px auto" }}>
                 <Grid container spacing={2}>
                     {/* Name Field */}

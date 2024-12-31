@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDeleteSingleCrudMutation, useGetAllCrudQuery, useGetSingleCrudQuery, useUpdateSingleCrudMutation } from "../redux/features/crud/crudApi";
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Avatar, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -41,8 +41,8 @@ const CrudTable = () => {
     createdAt: string;
     description: string;
     email: string;
-    image: string
-    name: string
+    image: { url: string, publicId: string };
+    name: string;
     phone: number;
     priority: string;
     updatedAt: string;
@@ -104,6 +104,11 @@ const CrudTable = () => {
     updateSingleCrud({ id, data: formData });
   }
 
+  const handleDelete = (id: string) => {
+    const res = confirm("Are you sure you want to delete");
+    if (res) deleteSingleCrudById(id);
+  }
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -131,7 +136,7 @@ const CrudTable = () => {
                 getAllCrud?.data?.map((item: TTodo) => (
                   <StyledTableRow key={item?._id}>
                     <StyledTableCell component="th" scope="row" align="center">
-                      {item?.image}
+                      <Avatar alt={item?.name} src={item?.image?.url} sx={{ width: 58, height: 58 }} className="border border-purple-500" />
                     </StyledTableCell>
                     <StyledTableCell align="center">{item?.name}</StyledTableCell>
                     <StyledTableCell align="center">{item?.email}</StyledTableCell>
@@ -145,7 +150,7 @@ const CrudTable = () => {
                           <BiEdit />
                         </Button>
                       </IconButton>
-                      <IconButton color="secondary" size="medium" onClick={() => deleteSingleCrudById(item?._id)}>
+                      <IconButton color="secondary" size="medium" onClick={() => handleDelete(item?._id)}>
                         <DeleteForeverIcon />
                       </IconButton>
                     </StyledTableCell>
