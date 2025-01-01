@@ -4,14 +4,38 @@ import { useForm } from "react-hook-form";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import sign_up_todo from "../assets/sign-up-todo.svg";
 import { Link } from "react-router-dom";
+import { useSignUpMutation } from "../redux/features/auth/authApi";
+import { toast } from "sonner";
 
 const SignUpForm = () => {
     const { register, handleSubmit } = useForm();
     const [showPassword, setShowPassword] = useState(false);
+    const [signUp, { data, isLoading, isSuccess, isError }] = useSignUpMutation();
+    console.log(data);
 
     const onSubmit = (data: any) => {
-        console.log(data);
+        // console.log(data);
+        // const tostId = toast.loading("Creating acount...");
+        const formData = new FormData();
+
+        if (!data.image || data.image.length === 0) {
+            toast.error("Please upload an image.");
+            return;
+        }
+
+        const inputData = {
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            password: data.password,
+        }
+
+        formData.append("data", JSON.stringify(inputData));
+        formData.append("image", data.image[0]);
+
+        signUp({ data: formData });
     };
+
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     return (
@@ -21,23 +45,24 @@ const SignUpForm = () => {
                 <img src={sign_up_todo} alt="Todo Image" className="w-[50%] md:w-[53%] lg:w-[30%]" />
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-5 lg:w-[30%]">
                     <FormControl>
-                        <InputLabel htmlFor="component-outlined">Namel</InputLabel>
-                        <OutlinedInput type="text" {...register("Name", { required: true })} id="component-outlined" label="Name" />
+                        <InputLabel htmlFor="component-outlined">Name</InputLabel>
+                        <OutlinedInput type="text" {...register("name", { required: true })} id="component-outlined" label="Name" />
                     </FormControl>
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">Email</InputLabel>
-                        <OutlinedInput type="email" {...register("Email", { required: true })} id="component-outlined" label="Email" />
+                        <OutlinedInput type="email" {...register("email", { required: true })} id="component-outlined" label="Email" />
                     </FormControl>
                     <FormControl>
-                        <OutlinedInput type="file" {...register("Image", { required: true })} id="component-outlined" />
+                        <OutlinedInput type="file" {...register("image", { required: true })} id="component-outlined" />
                     </FormControl>
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">Phone</InputLabel>
-                        <OutlinedInput type="text" {...register("Phone", { required: true })} id="component-outlined" label="Phone" />
+                        <OutlinedInput type="text" {...register("phone", { required: true })} id="component-outlined" label="Phone" />
                     </FormControl>
                     <FormControl variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
+                            {...register("password", { required: true })}
                             id="outlined-adornment-password"
                             type={showPassword ? 'text' : 'password'}
                             endAdornment={
