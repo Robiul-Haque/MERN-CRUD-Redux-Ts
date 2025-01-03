@@ -15,7 +15,7 @@ const SignUpForm = () => {
 
     const onSubmit = (data: any) => {
         // console.log(data);
-        // const tostId = toast.loading("Creating acount...");
+        const toastId = toast.loading("Creating acount...");
         const formData = new FormData();
 
         if (!data.image || data.image.length === 0) {
@@ -33,7 +33,15 @@ const SignUpForm = () => {
         formData.append("data", JSON.stringify(inputData));
         formData.append("image", data.image[0]);
 
-        signUp({ data: formData });
+        signUp({ data: formData }).unwrap()
+            .then((res) => {
+                toast.success("Account is created", { id: toastId });
+                console.log(res);
+            })
+            .catch((error) => {
+                toast.error("Something went wrong try again!", { id: toastId });
+                console.error(error);
+            });
     };
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -46,24 +54,23 @@ const SignUpForm = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-5 lg:w-[30%]">
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">Name</InputLabel>
-                        <OutlinedInput type="text" {...register("name", { required: true })} id="component-outlined" label="Name" />
+                        <OutlinedInput type="text" {...register("name", { required: true })} label="Name" />
                     </FormControl>
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">Email</InputLabel>
-                        <OutlinedInput type="email" {...register("email", { required: true })} id="component-outlined" label="Email" />
+                        <OutlinedInput type="email" {...register("email", { required: true })} label="Email" />
                     </FormControl>
                     <FormControl>
-                        <OutlinedInput type="file" {...register("image", { required: true })} id="component-outlined" />
+                        <OutlinedInput type="file" {...register("image", { required: true })} />
                     </FormControl>
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">Phone</InputLabel>
-                        <OutlinedInput type="text" {...register("phone", { required: true })} id="component-outlined" label="Phone" />
+                        <OutlinedInput type="text" {...register("phone", { required: true })} label="Phone" />
                     </FormControl>
                     <FormControl variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
                             {...register("password", { required: true })}
-                            id="outlined-adornment-password"
                             type={showPassword ? 'text' : 'password'}
                             endAdornment={
                                 <InputAdornment position="end">
