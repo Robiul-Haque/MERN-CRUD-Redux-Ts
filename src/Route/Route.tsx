@@ -6,6 +6,7 @@ import SignUp from "../Page/SignUp";
 import ProtectedRoute from "../Route/protectedRoute";
 import Profile from "../Page/Profile";
 import Crud from "../Page/Crud";
+import ForgotPassword from "../Page/ForgotPassword";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
             {
                 path: "/sign-up",
                 element: <SignUp />
+            },
+            {
+                path: "/forgot-password",
+                element: <ForgotPassword />
             },
             {
                 path: "/dashboard",

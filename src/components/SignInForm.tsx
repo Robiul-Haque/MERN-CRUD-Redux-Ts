@@ -33,6 +33,7 @@ const SignInForm = () => {
             toast.error("Something went wrong try again!", { id: tostId });
         }
     };
+    
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     return (
@@ -65,7 +66,7 @@ const SignInForm = () => {
                 <small>Don,t have an account <span className="underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300"><Link to="/sign-up">Sign Up</Link></span> here</small>
                 <Link to="#" className="flex justify-center items-center gap-x-2 underline decoration-slate-950 text-gray-500 hover:text-gray-900 ease-in duration-300 cursor-pointer">
                     <MdOutlineLock />
-                    <small><p>Forgot Password</p></small>
+                    <small><Link to="/forgot-password">Forgot Password</Link></small>
                 </Link>
             </div>
             <input type="submit" value={"Sign In"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />

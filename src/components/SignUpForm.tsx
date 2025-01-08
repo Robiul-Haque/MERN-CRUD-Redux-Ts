@@ -3,25 +3,19 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import sign_up_todo from "../assets/sign-up-todo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignUpMutation } from "../redux/features/auth/authApi";
 import { toast } from "sonner";
 
 const SignUpForm = () => {
     const { register, handleSubmit } = useForm();
     const [showPassword, setShowPassword] = useState(false);
-    const [signUp, { data, isLoading, isSuccess, isError }] = useSignUpMutation();
-    console.log(data);
+    const [signUp] = useSignUpMutation();
+    const navigate = useNavigate();
 
     const onSubmit = (data: any) => {
-        // console.log(data);
-        const toastId = toast.loading("Creating acount...");
+        const toastId = toast.loading("Creating account...");
         const formData = new FormData();
-
-        if (!data.image || data.image.length === 0) {
-            toast.error("Please upload an image.");
-            return;
-        }
 
         const inputData = {
             name: data.name,
@@ -33,18 +27,17 @@ const SignUpForm = () => {
         formData.append("data", JSON.stringify(inputData));
         formData.append("image", data.image[0]);
 
-        signUp({ data: formData }).unwrap()
+        signUp(formData)
+            .unwrap()
             .then((res) => {
-                toast.success("Account is created", { id: toastId });
-                console.log(res);
+                toast.success(res?.message, { id: toastId });
+                navigate("/sign-in");
             })
             .catch((error) => {
                 toast.error("Something went wrong try again!", { id: toastId });
                 console.error(error);
             });
     };
-
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     return (
         <section className="relative">
@@ -76,7 +69,7 @@ const SignUpForm = () => {
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
+                                        onClick={() => setShowPassword(!showPassword)}
                                         edge="end"
                                     >
                                         {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
