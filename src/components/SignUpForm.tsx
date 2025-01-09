@@ -33,9 +33,8 @@ const SignUpForm = () => {
                 toast.success(res?.message, { id: toastId });
                 navigate("/sign-in");
             })
-            .catch((error) => {
-                toast.error("Something went wrong try again!", { id: toastId });
-                console.error(error);
+            .catch((err) => {
+                toast.error(err?.data?.message, { id: toastId });
             });
     };
 
