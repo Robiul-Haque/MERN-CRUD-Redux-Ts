@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import { useForgotPasswordMutation } from "../redux/features/auth/authApi";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPasswordForm = () => {
     const { register, handleSubmit } = useForm();
     const [forgotPassword] = useForgotPasswordMutation();
+    const navigate = useNavigate();
 
     const onSubmit = async (data: any) => {
         const tostId = toast.loading("We find your account");
@@ -14,6 +16,7 @@ const ForgotPasswordForm = () => {
         forgotPassword(data?.email)
             .unwrap()
             .then((res) => {
+                navigate("/verify-otp");
                 toast.success(res?.message, { id: tostId });
             })
             .catch((err) => {

@@ -7,6 +7,7 @@ import ProtectedRoute from "../Route/protectedRoute";
 import Profile from "../Page/Profile";
 import Crud from "../Page/Crud";
 import ForgotPassword from "../Page/ForgotPassword";
+import VerifyOtp from "../Page/VerifyOtp";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             {
                 path: "/forgot-password",
                 element: <ForgotPassword />
+            },
+            {
+                path: "/verify-otp",
+                element: <VerifyOtp />
             },
             {
                 path: "/dashboard",
