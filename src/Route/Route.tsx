@@ -8,6 +8,7 @@ import Profile from "../Page/Profile";
 import Crud from "../Page/Crud";
 import ForgotPassword from "../Page/ForgotPassword";
 import VerifyOtp from "../Page/VerifyOtp";
+import ResetPassword from "../Page/ResetPassword";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
             {
                 path: "/verify-otp",
                 element: <VerifyOtp />
+            },
+            {
+                path: "/reset-password",
+                element: <ResetPassword />
             },
             {
                 path: "/dashboard",
