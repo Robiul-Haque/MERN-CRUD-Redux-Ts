@@ -4,20 +4,24 @@ import { useForgotPasswordMutation } from "../redux/features/auth/authApi";
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { resetAccountEmail } from "../redux/features/auth/authSlice";
+import { useAppDispatch } from "../redux/hook";
 
 const ForgotPasswordForm = () => {
     const { register, handleSubmit } = useForm();
     const [forgotPassword] = useForgotPasswordMutation();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const onSubmit = async (data: any) => {
-        const tostId = toast.loading("We find your account");
+        const tostId = toast.loading("We are looking into your account");
 
         forgotPassword(data?.email)
             .unwrap()
             .then((res) => {
-                navigate("/verify-otp");
+                dispatch(resetAccountEmail({ email: res?.data?.email }));
                 toast.success(res?.message, { id: tostId });
+                navigate("/verify-otp");
             })
             .catch((err) => {
                 toast.error(err?.data?.message, { id: tostId });

@@ -4,11 +4,13 @@ import { RootState } from "../../store";
 type TAuthState = {
     user: null | object;
     token: null | string;
+    email: null | string;
 }
 
 const initialState: TAuthState = {
     user: null,
     token: null,
+    email: null,
 }
 
 const authSlice = createSlice({
@@ -23,11 +25,18 @@ const authSlice = createSlice({
         logout: (state) => {
             state.user = null;
             state.token = null;
+        },
+        resetAccountEmail: (state, action) => {
+            const { email } = action.payload;
+            state.email = email;
+        },
+        removeAccountEmail: (state) => {
+            state.email = null;
         }
     }
 });
 
-export const { setUser, logout } = authSlice.actions;
+export const { setUser, logout, resetAccountEmail } = authSlice.actions;
 
 export default authSlice.reducer;
 
