@@ -20,12 +20,10 @@ const ForgotPasswordForm = () => {
             .unwrap()
             .then((res) => {
                 dispatch(resetAccountEmail({ email: res?.data?.email }));
+                if (res?.success) navigate("/verify-otp");
                 toast.success(res?.message, { id: tostId });
-                navigate("/verify-otp");
             })
-            .catch((err) => {
-                toast.error(err?.data?.message, { id: tostId });
-            });
+            .catch((err) => toast.error(err?.data?.message, { id: tostId }));
     };
 
     return (

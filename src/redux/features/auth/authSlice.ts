@@ -36,8 +36,9 @@ const authSlice = createSlice({
     }
 });
 
-export const { setUser, logout, resetAccountEmail } = authSlice.actions;
+export const { setUser, logout, resetAccountEmail, removeAccountEmail } = authSlice.actions;
 
 export default authSlice.reducer;
 
 export const useCurrentToken = (state: RootState) => state.auth.token;
+export const useGetEmail = (state: RootState) => state.auth.email;

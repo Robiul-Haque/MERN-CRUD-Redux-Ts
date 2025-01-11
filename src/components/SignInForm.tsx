@@ -33,8 +33,6 @@ const SignInForm = () => {
             toast.error("Something went wrong try again!", { id: tostId });
         }
     };
-    
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-6 lg:w-[30%]">
@@ -53,7 +51,7 @@ const SignInForm = () => {
                         <InputAdornment position="end">
                             <IconButton
                                 aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
+                                onClick={() => setShowPassword(!showPassword)}
                                 edge="end"
                             >
                                 {showPassword ? <MdVisibilityOff /> : <MdVisibility />}

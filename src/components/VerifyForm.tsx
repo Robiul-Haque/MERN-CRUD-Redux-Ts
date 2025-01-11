@@ -12,18 +12,15 @@ const VerifyForm = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const toastId = toast.loading("Verifying OTP...");
 
     verifyOtp({ email, otp: data?.otp_code })
       .unwrap()
       .then((res) => {
-        navigate("/reset-password");
+        if (res?.success) navigate("/reset-password");
         toast.success(res?.message, { id: toastId });
       })
-      .catch((err) => {
-        toast.error(err?.message, { id: toastId });
-      });
+      .catch((err) => toast.error(err?.message, { id: toastId }));
   };
 
   return (
