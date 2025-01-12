@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "http://localhost:8000/api/v1",
+    baseUrl: "https://crud-with-mongoose-ts.vercel.app/api/v1",
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
         // Get the token from state and send it header authorization in every request
@@ -19,7 +19,7 @@ const baseQueryWithRefreshToken = async (args: string | FetchArgs, api: BaseQuer
 
     if ((result as any).error?.data?.error?.statusCode === 401) {
         // Sending refresh token
-        const res = await fetch("http://localhost:8000/api/v1/auth/refresh-token", {
+        const res = await fetch("https://crud-with-mongoose-ts.vercel.app/api/v1/auth/refresh-token", {
             method: "POST",
             credentials: "include"
         });
