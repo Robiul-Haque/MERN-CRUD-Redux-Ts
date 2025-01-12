@@ -1,8 +1,11 @@
 import MobileNavToggleIcon from "../components/MobileNavToggleIcon";
 import ProfileForm from "../components/ProfileForm";
+import Title from "../PageTitle/Title";
 
 const Profile = () => {
     return (
+        <>
+        <Title title="Profile"></Title>
         <section className="md:flex justify-center lg:w-full bg-white h-screen">
             <div className="overflow-x-auto lg:w-full lg:mx-5">
                 <div className="flex lg:block justify-between items-center mx-10 my-8">
@@ -18,6 +21,7 @@ const Profile = () => {
                 <ProfileForm />
             </div>
         </section>
+        </>
     )
 }
 
