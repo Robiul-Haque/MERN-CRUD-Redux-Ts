@@ -1,9 +1,10 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { logout, setUser } from "../features/auth/authSlice";
+const baseUrlApi = import.meta.env.VITE_BASE_URL_API;
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "https://crud-with-mongoose-ts.vercel.app/api/v1",
+    baseUrl: baseUrlApi,
     credentials: "include",
     prepareHeaders: (headers, { getState }) => {
         // Get the token from state and send it header authorization in every request
@@ -16,11 +17,11 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithRefreshToken = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
     let result = await baseQuery(args, api, extraOptions);
-    
+
     // If the request is unauthorized, check if the refresh token is expired and try to refresh it
     if ((result as any).error?.data?.error?.statusCode === 401) {
         // Sending refresh token
-        const res = await fetch("https://crud-with-mongoose-ts.vercel.app/api/v1/auth/refresh-token", {
+        const res = await fetch(`${baseUrlApi}/auth/refresh-token`, {
             method: "POST",
             credentials: "include"
         });
