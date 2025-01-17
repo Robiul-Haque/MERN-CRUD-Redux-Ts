@@ -16,7 +16,8 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithRefreshToken = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
     let result = await baseQuery(args, api, extraOptions);
-
+    
+    // If the request is unauthorized, check if the refresh token is expired and try to refresh it
     if ((result as any).error?.data?.error?.statusCode === 401) {
         // Sending refresh token
         const res = await fetch("https://crud-with-mongoose-ts.vercel.app/api/v1/auth/refresh-token", {

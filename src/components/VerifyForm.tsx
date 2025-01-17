@@ -11,6 +11,7 @@ const VerifyForm = () => {
   const [verifyOtp] = useVerifyOtpMutation();
   const navigate = useNavigate();
 
+  // Verify OTP
   const onSubmit = async (data: any) => {
     const toastId = toast.loading("Verifying OTP...");
 
@@ -20,7 +21,9 @@ const VerifyForm = () => {
         if (res?.success) navigate("/reset-password");
         toast.success(res?.message, { id: toastId });
       })
-      .catch((err) => toast.error(err?.message, { id: toastId }));
+      .catch((err) => {
+        toast.error(err?.data?.message, { id: toastId })
+      });
   };
 
   return (
@@ -30,7 +33,7 @@ const VerifyForm = () => {
         <InputLabel htmlFor="component-outlined">Your Otp</InputLabel>
         <OutlinedInput type="number" {...register("otp_code", { required: true })} id="component-outlined" label="Email" />
       </FormControl>
-      <input type="submit" value={"Search"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />
+      <input type="submit" value={"Verify"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />
     </form >
   )
 }

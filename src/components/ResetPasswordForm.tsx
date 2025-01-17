@@ -17,6 +17,7 @@ const ResetPasswordForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  // Reset password
   const onSubmit = async (data: any) => {
     const toastId = toast.loading("Updating Password...");
 
@@ -27,7 +28,7 @@ const ResetPasswordForm = () => {
         if (res?.success) navigate("/sign-in");
         toast.success(res?.message, { id: toastId });
       })
-      .catch((err) => toast.error(err?.message, { id: toastId }));
+      .catch((err) => toast.error(err?.data?.message, { id: toastId }));
   }
 
   return (
@@ -53,7 +54,7 @@ const ResetPasswordForm = () => {
           }
         />
       </FormControl>
-      <input type="submit" value={"Search"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />
+      <input type="submit" value={"Update"} className="bg-gradient-to-r from-fuchsia-600 to-indigo-600 text-white font-semibold px-5 py-3 rounded-md cursor-pointer hover:from-fuchsia-700 hover:to-indigo-700 ease-in duration-1000" />
     </form >
   )
 }

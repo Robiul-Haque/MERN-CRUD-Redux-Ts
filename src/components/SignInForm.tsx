@@ -26,6 +26,7 @@ const SignInForm = () => {
             const res = await login(userInfo).unwrap();
             // Verify token and return user info if valid
             const decodedUserData = verifyToken(res.data.accessToken);
+            // Set the new access token in the user state
             dispatch(setUser({ user: decodedUserData, token: res.data.accessToken }));
             if (res?.success) navigate("/dashboard");
             toast.success("Logged in", { id: tostId });

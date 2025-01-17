@@ -13,6 +13,7 @@ const SignUpForm = () => {
     const [signUp] = useSignUpMutation();
     const navigate = useNavigate();
 
+    // Create a new user
     const onSubmit = (data: any) => {
         const toastId = toast.loading("Creating account...");
         const formData = new FormData();
