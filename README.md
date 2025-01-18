@@ -54,8 +54,6 @@ DaisyUI: Tailwind CSS component library 🌼.
 
 Material UI: UI components for React applications 🖌️.
 
-Emotion: CSS-in-JS library for styling 🎭.
-
 #### Development Tools
 
 Vite: Build tool for fast ⚡ development and production builds 🏭.
@@ -64,7 +62,6 @@ TypeScript: A Strongly typed programming language for JavaScript ✍️.
 
 ESLint: For linting and enforcing code quality ✅.
 
-PostCSS: For transforming CSS with JavaScript plugins 🧩.
 
 #### 🛠️ Prerequisites
 
@@ -79,7 +76,7 @@ npm or yarn: For managing dependencies 📦.
 Clone the repository 🌀:
 
 git clone <https://github.com/Robiul-Haque/MERN-CRUD-Redux-Ts.git>
-cd crud-client-app
+cd MERN-CRUD-Redux-Ts
 
 Install dependencies 📥:
 
@@ -104,24 +101,6 @@ Preview the production build 🔍:
 npm run preview
 #### or
 yarn preview
-
-### 📂 Project Structure
-
-crud-client-app/
-├── public/             # Static assets 🖼️
-├── src/                # Source code 💻
-│   ├── components/     # Reusable components 🧩
-│   ├── pages/          # Application pages 📄
-│   ├── store/          # Redux store setup 📦
-│   ├── styles/         # Global and Tailwind CSS styles 🎨
-│   ├── utils/          # Utility functions 🔧
-│   ├── App.tsx         # Main app component 🏠
-│   ├── main.tsx        # Entry point 🚪
-├── .eslintrc.js        # ESLint configuration ⚙️
-├── tailwind.config.js  # Tailwind CSS configuration 🧵
-├── tsconfig.json       # TypeScript configuration 📜
-├── vite.config.ts      # Vite configuration ⚡
-└── package.json        # Project metadata and scripts 📝
 
 ### 📜 Scripts
 
