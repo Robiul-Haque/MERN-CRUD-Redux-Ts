@@ -43,8 +43,8 @@ const SignUpForm = () => {
         <section className="relative">
             <h1 className="text-2xl font-bold bg-gradient-to-r from-fuchsia-600 to-indigo-600 bg-clip-text text-transparent absolute top-[4%]  lg:top-[4%] left-[30%] md:left-[40%] lg:left-[42%]">SIGNUP NOW!</h1>
             <div className="flex justify-center items-center flex-col lg:flex-row gap-y-12 lg:gap-x-14 h-screen bg-slate-50">
-                <img src={sign_up_todo} alt="Todo Image" className="w-[50%] md:w-[53%] lg:w-[30%]" />
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-5 lg:w-[30%]">
+                <img src={sign_up_todo} alt="Todo Image" className="w-[55%] md:w-[53%] lg:w-[30%]" />
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-5 w-[85%] md:w-[55%] lg:w-[30%]">
                     <FormControl>
                         <InputLabel htmlFor="component-outlined">Name</InputLabel>
                         <OutlinedInput type="text" {...register("name", { required: true })} label="Name" />

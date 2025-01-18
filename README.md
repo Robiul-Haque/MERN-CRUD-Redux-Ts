@@ -1,6 +1,10 @@
-## 🌟 CRUD Client App
+## 🌟 CRUD App Client Side
 
-This is the client-side 🖥️ application for a CRUD (Create 🆕, Read 📖, Update ✏️, Delete ❌) project, built using modern 🛠️ web development tools and technologies. The app is designed to provide an interactive 🤹 and responsive 📱 user interface.
+<b>Live Link:</b> https://mern-crud-123.netlify.app/
+
+Backend repositories link: https://github.com/Robiul-Haque/MERN-CRUD-server-with-ts-mongoose.git
+
+This is the client-side 🖥️ application for a <b>CRUD</b> (Create 🆕, Read 📖, Update ✏️, Delete ❌) project, built using modern 🛠️ web development tools and technologies. The app is designed to provide an interactive 🤹 and responsive 📱 user interface.
 
 #### 🎯 Features
 
